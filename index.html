@@ -31,16 +31,44 @@
 	
 		#content{
 			position:absolute;
-			margin-top:100px;
+			margin-top:300px;
 			left:50%;
-			top:50%;
-			transform:translate(-50%, -50%);
+			transform:translate(-50%);
 			font-size:24px;
 			font-family:helvetica, arial;
 		}
 		
+		.label{
+			transform:translate(0, 20px);
+			display:inline-block;
+			padding:10px;
+			padding-left:20px;
+			padding-right:20px;
+			background:rgba(0, 0, 0, 0.4);
+			font-weight:bold;
+		}
+		
 		.item{
-			margin:30px;
+			background:rgba(0, 0, 0, 0.2);
+			padding:10px;
+			margin:20px;
+			margin-left:0;
+		}
+		
+		.copy{
+			transform:translate(10px, 17px);
+			border:8px solid rgb(0, 0, 0);
+			background:rgba(0, 0, 0, 0.2);
+			padding:7px;
+			padding-left:15px;
+			padding-right:15px;
+			color:#fff;
+			border:none;
+			text-decoration:none;
+		}
+		.copy:hover{
+			cursor:pointer;
+			background:rgba(0, 0, 0, 0.3);
 		}
 	</style>
 </head>
@@ -63,15 +91,59 @@
 	const content = document.getElementById("content");
 	
 	for(let i = 0; i < url.length; i++){
+		let l = document.createElement("div");
+		l.classList.add("label");
 		let n = document.createElement("div");
 		n.classList.add("item");
+		let b = document.createElement("button");
+		b.innerText = "Copy Text";
+		b.classList.add("copy");
 		n.innerText = decodeURIComponent(url[i]);
 		if(ENABLE_FIRST_WORD_BOLD){
-			let first = n.innerText.split(" ")[0];
-			first = `<strong>${first}</strong>`;
-			n.innerHTML = [first, ...n.innerText.split(" ").splice(1)].join(" ");
+			const text = n.innerText.split(" ");
+			const first = text[0];
+			n.innerText = text.splice(1).join(" ");
+			l.innerText = first;
 		}
+		b.addEventListener("click", () => {
+			console.log("gfdg");
+			copyTextToClipboard(n.innerText);
+		});
+		content.appendChild(l);
+		content.appendChild(b);
 		content.appendChild(n);
 	}
+	
+	
+	const msg = "Successfully copied!";
+	function fallbackCopyTextToClipboard(text) {
+	  var textArea = document.createElement("textarea");
+	  textArea.value = text;
+	  textArea.style.position="fixed";
+	  document.body.appendChild(textArea);
+	  textArea.focus();
+	  textArea.select();
+
+	  try {
+		document.execCommand('copy');
+		alert(msg);
+	  } catch (err) {
+		console.error(err);
+	  }
+
+	  document.body.removeChild(textArea);
+	}
+	function copyTextToClipboard(text) {
+	  if (!navigator.clipboard) {
+		fallbackCopyTextToClipboard(text);
+		return;
+	  }
+	  navigator.clipboard.writeText(text).then(function() {
+		alert(msg);
+	  }, function(err) {
+		console.error(err);
+	  });
+	}
+	
 </script>
 </html>
