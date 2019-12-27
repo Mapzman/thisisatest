@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	
+	<style>
+		#content{
+			position:absolute;
+			left:50%;
+			top:50%;
+			transform:translate(-50%, -50%);
+			text-align:center;
+			font-size:24px;
+			font-family:helvetica, arial;
+		}
+		
+		div{
+			margin:30px;
+		}
+	</style>
+</head>
+
+
+<body>
+	<div id="content"></div>
+</body>
+
+<script>
+	let url = window.location.href;
+	url = url.split("|").splice(1);
+	
+	const content = document.getElementById("content");
+	
+	for(let i = 0; i < url.length; i++){
+		let n = document.createElement("div");
+		n.innerText = url[i];
+		content.appendChild(n);
+	}
+</script>
+</html>
