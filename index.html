@@ -108,7 +108,7 @@
 			console.log("gfdg");
 			copyTextToClipboard(n.innerText);
 		});
-		content.appendChild(l);
+		if(ENABLE_FIRST_WORD_BOLD) content.appendChild(l);
 		content.appendChild(b);
 		content.appendChild(n);
 	}
