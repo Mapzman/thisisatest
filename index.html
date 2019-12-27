@@ -35,7 +35,7 @@
 	
 	for(let i = 0; i < url.length; i++){
 		let n = document.createElement("div");
-		n.innerText = url[i];
+		n.innerText = decodeURIComponent(url[i]);
 		content.appendChild(n);
 	}
 </script>
